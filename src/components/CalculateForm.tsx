@@ -23,6 +23,10 @@ function CalculateForm({onCalculate, onReset}: CalculateFormProps) {
     onReset();
   }
 
+  function isValid(): boolean {
+    return lengthInput !== "" && pressureInput !== "";
+  }
+
   return (
     <form
       onSubmit={(e) => {
@@ -56,8 +60,8 @@ function CalculateForm({onCalculate, onReset}: CalculateFormProps) {
         type="number"
         id="length"
         min={0}
-        value={lengthInput}
-        onChange={(e) => setLengthInput(e.target.valueAsNumber)}
+        value={lengthInput.toString()}
+        onChange={(e) => setLengthInput(e.target.value)}
       />
       <br/>
       <br/>
@@ -68,13 +72,16 @@ function CalculateForm({onCalculate, onReset}: CalculateFormProps) {
         type="number"
         id="pressure"
         min={0}
-        value={pressureInput}
-        onChange={(e) => setPressureInput(e.target.valueAsNumber)}
+        value={pressureInput.toString()}
+        onChange={(e) => setPressureInput(e.target.value)}
       />
       <br/>
       <br/>
 
-      <button type="submit">Calculate</button>
+      <button
+        type="submit"
+        disabled={!isValid()}
+      >Calculate</button>
       <button
         type="button"
         onClick={handleReset}
