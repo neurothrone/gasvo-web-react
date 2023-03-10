@@ -1,43 +1,56 @@
 import React, {useState} from "react";
 
+import {getNpsLabels, getNpsValue, NpsType} from "../lib/NpsType";
+
 type CalculateFormProps = {
   onCalculate: (nps: number, length: number, pressure: number) => void;
+  onReset: () => void;
 };
 
-function CalculateForm({onCalculate}: CalculateFormProps) {
-  const [npsInput, setNpsInput] = useState<string | number>("");
+function CalculateForm({onCalculate, onReset}: CalculateFormProps) {
+  const [npsType, setNpsType] = useState<NpsType>(NpsType.twenty);
   const [lengthInput, setLengthInput] = useState<string | number>("");
   const [pressureInput, setPressureInput] = useState<string | number>("");
 
   const handleCalculate = () => {
-    onCalculate(Number(npsInput), Number(lengthInput), Number(pressureInput));
+    const npsValue = getNpsValue(npsType);
+    onCalculate(npsValue, Number(lengthInput), Number(pressureInput));
   }
 
   const handleReset = () => {
-    setNpsInput("");
     setLengthInput("");
     setPressureInput("");
+    onReset();
   }
 
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
+
         handleCalculate();
       }}
     >
-      <label htmlFor="nps">NPS</label>
+      <label htmlFor="nps">
+        <a href="https://en.wikipedia.org/wiki/Nominal_Pipe_Size#NPS_tables_for_selected_sizes">Nominal Pipe Size</a> |
+        DN (mm)
+      </label>
       <br/>
-      <input
-        type="number"
-        id="nps" value={npsInput}
-        min={0}
-        onChange={(e) => setNpsInput(e.target.valueAsNumber)}
-      />
+      <select
+        defaultValue={npsType}
+        onChange={(e => {
+          const selectedNpsType: NpsType = e.target.value as NpsType;
+          setNpsType(selectedNpsType);
+        })}
+      >
+        {getNpsLabels().map(value => {
+          return <option key={value} value={value}>{value}</option>
+        })}
+      </select>
       <br/>
       <br/>
 
-      <label htmlFor="length">Length</label>
+      <label htmlFor="length">Length (m)</label>
       <br/>
       <input
         type="number"
@@ -49,7 +62,7 @@ function CalculateForm({onCalculate}: CalculateFormProps) {
       <br/>
       <br/>
 
-      <label htmlFor="pressure">Pressure</label>
+      <label htmlFor="pressure">Pressure (mbar)</label>
       <br/>
       <input
         type="number"
