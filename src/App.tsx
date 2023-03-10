@@ -11,11 +11,14 @@ function App() {
     setGasVolume(newGasVolume);
   }
 
+  const getGasVolume = () => gasVolume === 0 ? gasVolume.toFixed(0) : gasVolume.toFixed(3);
+
   return (
     <>
       <h1>GasVo</h1>
-      <CalculateForm onCalculate={handleCalculate}/>
-      <p>Gas Volume: {gasVolume.toFixed(3)}</p>
+      <h2>Gas Pipe Volume Calculator</h2>
+      <CalculateForm onCalculate={handleCalculate} onReset={() => setGasVolume(0)}/>
+      <p>Gas Volume: {getGasVolume()}</p>
     </>
   );
 }
