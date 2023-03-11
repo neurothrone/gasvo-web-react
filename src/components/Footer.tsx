@@ -1,6 +1,6 @@
 function Footer() {
   return (
-    <footer className="container sticky-sm-bottom">
+    <footer className="container">
       <p>
         <a
           className="text-decoration-none interactive-element"
