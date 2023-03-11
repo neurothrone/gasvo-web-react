@@ -1,7 +1,8 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import {getNpsLabels, getNpsValue, NpsType} from "../lib/NpsType";
 import {getPressureLabels, PressureType} from "../lib/PressureType";
+import PressureSelect from "./PressureSelect";
 
 type CalculateFormProps = {
   onCalculate: (nps: number, length: number, pressure: number) => void;
@@ -14,6 +15,8 @@ function CalculateForm({onCalculate, onReset}: CalculateFormProps) {
   const [pressureType, setPressureType] = useState<PressureType>(PressureType.thirty);
   const [pressureInput, setPressureInput] = useState<string | number>(pressureType);
 
+  // useEffect(() => handlePressureTypeChanged(pressureType), [pressureType]);
+
   const handleCalculate = () => {
     const npsValue = getNpsValue(npsType);
     onCalculate(npsValue, Number(lengthInput), Number(pressureInput));
@@ -25,6 +28,13 @@ function CalculateForm({onCalculate, onReset}: CalculateFormProps) {
       setPressureInput("");
     }
     onReset();
+  }
+
+  const handlePressureTypeChanged = (newPressureType: PressureType) => {
+    setPressureType(newPressureType);
+
+    const newPressureInput = newPressureType === PressureType.custom ? "" : Number(newPressureType);
+    setPressureInput(newPressureInput);
   }
 
   function isValid(): boolean {
@@ -86,6 +96,12 @@ function CalculateForm({onCalculate, onReset}: CalculateFormProps) {
       {/* endregion */}
 
       {/* region Pressure Select/Input */}
+      {/*<PressureSelect*/}
+      {/*  pressureType={pressureType}*/}
+      {/*  onPressureClick={(pressureClicked => handlePressureTypeChanged(pressureClicked))}*/}
+      {/*  className="mb-3"*/}
+      {/*/>*/}
+
       <div className="mb-3">
         <label
           className="form-label"
@@ -98,10 +114,7 @@ function CalculateForm({onCalculate, onReset}: CalculateFormProps) {
           defaultValue={pressureType}
           onChange={(e => {
             const selectedPressureType: PressureType = e.target.value as PressureType;
-            setPressureType(selectedPressureType);
-
-            const pressureInput = selectedPressureType === PressureType.custom ? "" : Number(selectedPressureType);
-            setPressureInput(pressureInput);
+            handlePressureTypeChanged(selectedPressureType);
           })}
         >
           {getPressureLabels().map(value => {
