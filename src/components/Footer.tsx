@@ -1,29 +1,57 @@
 function Footer() {
   return (
-    <footer>
+    <footer className="container sticky-sm-bottom">
       <p>
         <a
+          className="text-decoration-none interactive-element"
           href="https://neurothrone.tech/"
           target="_blank"
           rel="noreferrer"
         >Neurothrone</a> &copy; {new Date().getFullYear()}</p>
+
+      <ul
+        className="list-inline"
+      >
+        <li className="list-inline-item">
+          <a
+            className="text-decoration-none"
+            href="https://github.com/neurothrone"
+          >
+            <i className="fa-brands fa-github-square fs-3 interactive-element"></i>
+          </a>
+        </li>
+        <li className="list-inline-item">
+          <a
+            className="text-decoration-none"
+            href="https://www.linkedin.com/in/neurothrone"
+          >
+            <i className="fa-brands fa-linkedin fs-3 interactive-element"></i>
+          </a>
+        </li>
+      </ul>
+
       <hr/>
-      <p>This site is powered by&nbsp;
+
+      <p
+        className="text-center"
+      >This site is powered by&nbsp;
         <a
+          className="interactive-element"
           href="https://www.typescriptlang.org/"
           target="_blank"
           rel="noreferrer"
-        >TypeScript</a> &amp;&nbsp;
+        >
+          TypeScript
+        </a> &amp;&nbsp;
         <a
+          className="interactive-element"
           href="https://reactjs.org/"
           target="_blank"
           rel="noreferrer"
-        >React</a>
+        >
+          React
+        </a>
       </p>
-      <ul>
-        <li><a href="https://github.com/neurothrone">GitHub</a></li>
-        <li><a href="https://www.linkedin.com/in/neurothrone">LinkedIn</a></li>
-      </ul>
     </footer>
   );
 }

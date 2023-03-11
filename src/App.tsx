@@ -16,12 +16,19 @@ function App() {
 
   return (
     <>
-      <h1>GasVo</h1>
-      <h2>Gas Pipe Volume Calculator</h2>
-      <CalculateForm onCalculate={handleCalculate} onReset={() => setGasVolume(0)}/>
-      <h3>Gas Volume (m<sup>3</sup>)</h3>
-      <p>{getGasVolume()}</p>
+      <header className="text-center mt-3">
+        <h1>GasVo</h1>
+        <h2 className="text-secondary">Gas Pipe Volume Calculator</h2>
+      </header>
 
+      <main className="container">
+        <CalculateForm onCalculate={handleCalculate} onReset={() => setGasVolume(0)}/>
+
+        <div className="text-center my-3">
+          <p className="fs-3 mb-0">Gas Volume (m<sup>3</sup>)</p>
+          <p className="display-3 fw-bold">{getGasVolume()}</p>
+        </div>
+      </main>
       <Footer/>
     </>
   );
